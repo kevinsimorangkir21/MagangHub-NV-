@@ -4,73 +4,46 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  User,
-  Award,
-  Settings,
-  LogOut,
-  Bell,
-  FileText,
-  Star,
   Briefcase,
-  BadgeCheck,
-  ClipboardList,
-  MessageSquare,
+  FileText,
   Users,
+  Settings,
+  Bell,
+  LogOut,
 } from "lucide-react";
 
-export default function DashboardLayout({ children }) {
+export default function PerusahaanLayout({ children }) {
   const pathname = usePathname();
+  const [isDark, setIsDark] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
 
-  const pengumuman = [
-    { id: 1, judul: "Batch 2 Dibuka!", tanggal: "15 Okt 2025" },
-    { id: 2, judul: "Perubahan Jadwal Wawancara", tanggal: "10 Okt 2025" },
-  ];
+  useEffect(() => {
+    const dark = localStorage.getItem("theme") === "dark";
+    setIsDark(dark);
+    document.documentElement.classList.toggle("dark", dark);
+  }, []);
 
   const menuItems = [
     {
-      section: "Utama",
+      section: "Navigasi",
       items: [
-        { href: "/dashboard", label: "Beranda", icon: Home },
-        { href: "/dashboard/lowongan", label: "Lowongan Pekerjaan", icon: Briefcase },
+        { href: "/perusahaan", label: "Dashboard", icon: Home },
+        { href: "/perusahaan/lowongan", label: "Lowongan Saya", icon: Briefcase },
+        { href: "/perusahaan/lamaran", label: "Lamaran Masuk", icon: FileText },
+        { href: "/perusahaan/pelamar", label: "Daftar Pelamar", icon: Users },
       ],
     },
     {
-      section: "Informasi Akun",
+      section: "Pengaturan",
       items: [
-        { href: "/dashboard/akun", label: "Informasi Akun", icon: Settings },
-        { href: "/dashboard/status", label: "Status Lamaran", icon: FileText },
+        { href: "/perusahaan/profil", label: "Profil Perusahaan", icon: Settings },
       ],
     },
-    {
-      section: "Profil Saya",
-      items: [
-        { href: "/dashboard/identitas", label: "Identitas Diri", icon: User },
-        { href: "/dashboard/keahlian", label: "Keahlian Diri", icon: Star },
-        { href: "/dashboard/penghargaan", label: "Penghargaan", icon: Award },
-        { href: "/dashboard/pratayang-id", label: "Pratayang ID", icon: BadgeCheck },
-      ],
-    },
-    {
-      section: "Report Magang",
-      items: [
-        {
-          href: "/dashboard/laporan-mingguan",
-          label: "Laporan Mingguan",
-          icon: ClipboardList,
-        },
-        {
-          href: "/dashboard/feedback-magang",
-          label: "Feedback Magang",
-          icon: MessageSquare,
-        },
-        {
-          href: "/dashboard/feedback-mentor",
-          label: "Feedback Mentor",
-          icon: Users,
-        },
-      ],
-    },
+  ];
+
+  const pengumuman = [
+    { id: 1, judul: "Batch Magang 2025 Dibuka!", tanggal: "15 Okt 2025" },
+    { id: 2, judul: "Update Sistem Dashboard", tanggal: "10 Okt 2025" },
   ];
 
   return (
@@ -92,7 +65,7 @@ export default function DashboardLayout({ children }) {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+                      className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
                         pathname === item.href
                           ? "bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
                           : "hover:bg-gray-100 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300"
@@ -116,21 +89,18 @@ export default function DashboardLayout({ children }) {
         </div>
       </aside>
 
-      {/* Konten utama */}
+      {/* Main Content */}
       <main className="flex-1 flex flex-col">
         {/* Header */}
         <header className="sticky top-0 z-40 flex items-center justify-between px-10 py-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-[#141a23]/80 backdrop-blur-md">
           <h2 className="font-semibold text-lg capitalize">
-            {pathname.split("/").pop() || "Dashboard Peserta"}
+            {pathname.split("/").pop() || "Dashboard Perusahaan"}
           </h2>
 
           <div className="flex items-center gap-6">
             {/* Notifikasi */}
             <div className="relative">
-              <button
-                onClick={() => setShowNotif(!showNotif)}
-                className="relative"
-              >
+              <button onClick={() => setShowNotif(!showNotif)} className="relative">
                 <Bell className="w-6 h-6 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition" />
                 <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
               </button>
@@ -156,19 +126,19 @@ export default function DashboardLayout({ children }) {
               )}
             </div>
 
-            {/* Profil user */}
+            {/* Profil Perusahaan */}
             <div className="flex items-center gap-3">
               <img
-                src="/avatar.jpg"
-                alt="User"
+                src="/company-logo.png"
+                alt="Company"
                 className="w-9 h-9 rounded-full border border-gray-300 dark:border-gray-700"
               />
-              <span className="text-sm font-medium">Kevin Simorangkir</span>
+              <span className="text-sm font-medium">PT. Telkom Indonesia</span>
             </div>
           </div>
         </header>
 
-        {/* Halaman konten */}
+        {/* Konten */}
         <div className="flex-1 p-10 overflow-y-auto bg-gray-50 dark:bg-[#0b0f15]">
           <div className="max-w-5xl mx-auto bg-white dark:bg-[#141a23] p-8 rounded-2xl shadow-md border border-gray-100 dark:border-gray-800">
             {children}

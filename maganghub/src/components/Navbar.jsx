@@ -137,44 +137,6 @@ export default function Navbar() {
             </div>
           )}
 
-          {/* ☀️ / 🌙 Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-lg bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 border border-gray-200 dark:border-white/10 transition"
-            aria-label="Toggle Dark Mode"
-          >
-            {isDark ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 text-yellow-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.6}
-                  d="M12 3v1m0 16v1m9-9h1M3 12H2m15.364 6.364l.707.707M6.343 6.343l-.707-.707m0 12.728l.707-.707m12.728 0l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 text-gray-700 dark:text-gray-300"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.6}
-                  d="M21.752 15.002A9.718 9.718 0 0112 21a9.718 9.718 0 01-9.752-5.998A9.96 9.96 0 0012 2a9.96 9.96 0 009.752 13.002z"
-                />
-              </svg>
-            )}
-          </button>
 
           {/* 🍔 Tombol Mobile */}
           <button

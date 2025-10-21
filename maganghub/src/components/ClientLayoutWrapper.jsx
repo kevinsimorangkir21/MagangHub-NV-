@@ -9,13 +9,25 @@ export default function ClientLayoutWrapper({ children }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true); // Render ulang setelah di-mount client
+    setMounted(true);
   }, []);
 
-  const hideLayout = ["/login", "/register", "/dashboard", "/lupa-kata-sandi"];
-  const shouldHide = hideLayout.some((path) => pathname.startsWith(path));
+  // 🚫 Semua halaman ini tidak perlu Navbar & Footer
+  const hideLayoutPrefixes = [
+    "/login",
+    "/register",
+    "/lupa-kata-sandi",
+    "/dashboard",     // dashboard peserta
+    "/admin",         // dashboard admin
+    "/perusahaan",    // dashboard perusahaan
+  ];
 
-  // Hindari render sebelum mounted agar HTML sama antara server dan client
+  // 🔍 Cek apakah path sekarang termasuk salah satu prefix di atas
+  const shouldHide = hideLayoutPrefixes.some((path) =>
+    pathname.startsWith(path)
+  );
+
+  // ⏳ Hindari mismatch antara server & client
   if (!mounted) return null;
 
   return (
